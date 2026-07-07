@@ -1,36 +1,3 @@
-# Repository Details
-
-## Repo Name
-
-```
-safex-faq-chatbot
-```
-
-Alternative options if that's taken or you want something more descriptive:
-- `safex-solutions-faq-bot`
-- `safex-rag-chatbot`
-- `faq-chatbot-safex`
-
-## Repo Description (GitHub short description field)
-
-```
-An AI-powered FAQ chatbot for SafeX Solutions built with Retrieval-Augmented Generation (RAG) — combines semantic search over company FAQs with LLM-generated answers, served via FastAPI and containerized with Docker.
-```
-
-## About / Topics (GitHub tags)
-
-```
-rag, chatbot, fastapi, nlp, embeddings, llm, sentence-transformers, docker, python, ai-ml, customer-support-bot
-```
-
----
-
-## README.md content
-
-Below is suggested content for your repo's main README — copy this in and fill in the screenshot slots.
-
----
-
 # SafeX Solutions FAQ Chatbot 🤖
 
 An AI-powered FAQ assistant for [safexsolutions.com](https://safexsolutions.com), built using **Retrieval-Augmented Generation (RAG)**. Instead of relying on rigid keyword matching, the bot understands the *meaning* behind a user's question, retrieves the most relevant company FAQs using semantic embeddings, and generates a natural, grounded answer.
@@ -126,21 +93,10 @@ Then open `http://localhost:8000` in your browser.
 <!-- Add your screenshots below. Example markdown syntax to use once you have images: -->
 <!-- ![Chat widget](docs/screenshots/chat-widget.png) -->
 
-**Chat widget — landing view**
+**Chat landing view**
 
-*(screenshot here)*
+<img width="960" height="485" alt="chatBot1" src="https://github.com/user-attachments/assets/3d925e71-ce14-4d59-8ac0-77a321f5847a" />
 
-**Chat widget — answering a question**
-
-*(screenshot here)*
-
-**Terminal — server starting up**
-
-*(screenshot here)*
-
-**API response via curl / Postman**
-
-*(screenshot here)*
 
 ## 🛠️ Tech Stack
 
@@ -151,12 +107,3 @@ Then open `http://localhost:8000` in your browser.
 Specify your license here (e.g. MIT), or note that this is an internal SafeX Solutions project.
 
 ---
-
-### Notes for filling in screenshots
-
-1. Create a folder in your repo: `docs/screenshots/`
-2. Save your screenshots there (e.g. `chat-widget.png`, `terminal-startup.png`)
-3. Replace each `*(screenshot here)*` placeholder above with:
-   ```markdown
-   ![Description](docs/screenshots/filename.png)
-   ```
