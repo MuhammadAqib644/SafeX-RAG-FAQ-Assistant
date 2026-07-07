@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  faq-chatbot:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - EMBEDDING_BACKEND=sentence-transformers
+      - GENERATION_MODE=extractive
+      # - GENERATION_MODE=llm
+      # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    restart: unless-stopped

@@ -1,0 +1,16 @@
+# Core web server
+fastapi==0.139.0
+uvicorn==0.50.2
+python-multipart==0.0.32
+
+# Week 1: TF-IDF bot
+scikit-learn>=1.4
+numpy
+
+# Week 2-3: RAG bot
+sentence-transformers>=5.0   # real semantic embeddings (needs huggingface.co access)
+anthropic>=0.40               # only needed if generation_mode="llm"
+
+# Optional, for production vector search at scale (swap in when FAQ set grows):
+# faiss-cpu
+# chromadb

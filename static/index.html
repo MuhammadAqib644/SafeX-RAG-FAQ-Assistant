@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>SafeX Solutions - FAQ Assistant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  :root {
+    --safex-navy: #0b1f3a;
+    --safex-blue: #1b5fae;
+    --safex-accent: #2fb8ac;
+    --bg: #f4f7fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .chat-container {
+    width: 420px;
+    max-width: 95vw;
+    height: 640px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(11, 31, 58, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .chat-header {
+    background: linear-gradient(135deg, var(--safex-navy), var(--safex-blue));
+    color: white;
+    padding: 18px 20px;
+  }
+  .chat-header h1 { font-size: 16px; margin: 0; }
+  .chat-header p { font-size: 12px; margin: 4px 0 0; opacity: 0.8; }
+  .messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .msg {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .msg.bot {
+    background: #eef2f8;
+    color: #16233b;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .msg.user {
+    background: var(--safex-blue);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .meta {
+    font-size: 10px;
+    color: #8a95a6;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+  .input-row {
+    display: flex;
+    padding: 12px;
+    gap: 8px;
+    border-top: 1px solid #eef1f6;
+  }
+  .input-row input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #d6dee9;
+    font-size: 14px;
+    outline: none;
+  }
+  .input-row input:focus { border-color: var(--safex-blue); }
+  .input-row button {
+    background: var(--safex-blue);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0 18px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .input-row button:hover { background: var(--safex-navy); }
+  .suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 16px 12px;
+  }
+  .suggestions button {
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 14px;
+    border: 1px solid #d6dee9;
+    background: white;
+    cursor: pointer;
+    color: var(--safex-navy);
+  }
+</style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1>SafeX Solutions — FAQ Assistant</h1>
+      <p>Ask me about our services, pricing, or company</p>
+    </div>
+    <div class="messages" id="messages">
+      <div class="msg bot">Hi! I'm the SafeX Solutions FAQ assistant. Ask me anything about our services, cybersecurity, cloud, web development, or pricing.</div>
+    </div>
+    <div class="suggestions">
+      <button onclick="ask('Do you build websites?')">Do you build websites?</button>
+      <button onclick="ask('What is your hourly rate?')">Pricing</button>
+      <button onclick="ask('Where are you located?')">Location</button>
+    </div>
+    <div class="input-row">
+      <input id="input" type="text" placeholder="Type your question..." onkeydown="if(event.key==='Enter') sendMessage()" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+<script>
+  function ask(text) {
+    document.getElementById('input').value = text;
+    sendMessage();
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+
+    appendMessage(text, 'user');
+
+    try {
+      const res = await fetch(`/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+      const data = await res.json();
+      appendMessage(data.answer, 'bot', data.method);
+    } catch (err) {
+      appendMessage('Sorry, something went wrong reaching the server.', 'bot');
+    }
+  }
+
+  function appendMessage(text, sender, meta) {
+    const messages = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = `msg ${sender}`;
+    div.textContent = text;
+    messages.appendChild(div);
+    if (meta) {
+      const metaDiv = document.createElement('div');
+      metaDiv.className = 'meta';
+      metaDiv.textContent = `method: ${meta}`;
+      messages.appendChild(metaDiv);
+    }
+    messages.scrollTop = messages.scrollHeight;
+  }
+</script>
+</body>
+</html>
